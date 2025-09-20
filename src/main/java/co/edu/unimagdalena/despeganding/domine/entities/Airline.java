@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,4 +25,12 @@ public class Airline {
 
     @Column(nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "flight", fetch = FetchType.EAGER)
+    private List<Flight> flights;
+
+    public void addFlight(Flight flight) {
+        flights.add(flight);
+        flight.setAirline(this);
+    }
 }

@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.OffsetDateTime;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,5 +21,33 @@ public class Flight {
     @Column(name = "flight_id")
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String number;
 
+    @Column(nullable = false)
+    private OffsetDateTime departureTime;
+
+    @Column(nullable = false)
+    private OffsetDateTime arrivalTime;
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "airline_id")
+    private Airline airline;
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "airport_id")
+    private Airport origin;
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "airport_id")
+    private Airport destination;
+
+    @ManyToMany(mappedBy = "flights")
+    //@Builder.Default
+    private Set<Tag> tags;
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+        tags.addFlight(this);
+    }
 }
