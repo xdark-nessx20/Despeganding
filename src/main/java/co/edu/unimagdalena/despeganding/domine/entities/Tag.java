@@ -27,6 +27,9 @@ public class Tag {
     @Column(nullable = false, unique = true)
     @ManyToMany(mappedBy = "tags")
     @Builder.Default
-
     private Set<Flight> flights = new HashSet<>();
+
+    public void addFlight(Flight flight) {
+        flights.add(flight);
+    }
 }

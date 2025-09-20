@@ -52,6 +52,6 @@ public class Flight {
 
     public void addTag(Tag tag) {
         this.tags.add(tag);
-        tags.addFlight(this);
+        tag.addFlight(this);
     }
 }
