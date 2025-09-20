@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -42,9 +43,12 @@ public class Flight {
     @JoinColumn(name = "airport_id")
     private Airport destination;
 
-    @ManyToMany(mappedBy = "flights")
-    //@Builder.Default
-    private Set<Tag> tags;
+    @ManyToMany(mappedBy = "tags")
+    @JoinTable(name = "tags_flights",
+            joinColumns = @JoinColumn(name = "flight_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    @Builder.Default
+    private Set<Tag> tags = new HashSet<>();
 
     public void addTag(Tag tag) {
         this.tags.add(tag);
