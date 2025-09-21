@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,7 +15,7 @@ import java.util.List;
 public class Airport {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "airport_id")
+    @Column(name = "airport_id", length = 3)
     private Long id;
 
     @Column(nullable = false, unique = true)

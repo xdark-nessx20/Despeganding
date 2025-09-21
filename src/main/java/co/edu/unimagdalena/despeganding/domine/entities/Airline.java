@@ -20,7 +20,7 @@ public class Airline {
     @Column(name = "airline_id")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 2)
     private String code;
 
     @Column(nullable = false)
