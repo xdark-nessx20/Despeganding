@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "airports")
 public class Airport {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "airport_id", length = 3)
+    @Column(name = "airport_id")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 3)
     private String code;
 
     @Column(nullable = false)

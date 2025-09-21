@@ -27,7 +27,7 @@ public class SeatInventory {
     @Column(nullable = false, name = "available_seats")
     private Integer availableSeats;
 
-    @ManyToOne @JoinColumn(name = "flight_id", unique = true, nullable = false)
-    private Flight flight;
+  @ManyToOne @JoinColumn(name = "flight_id", nullable = false)
+  private Flight flight;
 
 }

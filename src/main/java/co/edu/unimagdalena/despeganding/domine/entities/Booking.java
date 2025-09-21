@@ -20,10 +20,10 @@ public class Booking {
     @Column(name = "booking_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "created_at")
     private OffsetDateTime createdAt;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "updated_at")
     private OffsetDateTime updatedAt;
 
     @ManyToOne(optional = false)

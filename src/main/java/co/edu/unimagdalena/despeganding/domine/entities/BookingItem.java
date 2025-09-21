@@ -26,7 +26,7 @@ public class BookingItem {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "segment_order")
     private Integer segmentOrder;
 
     @ManyToOne(optional = false)

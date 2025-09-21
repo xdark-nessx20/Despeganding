@@ -21,7 +21,7 @@ public class PassengerProfile {
     @Column(nullable = false, unique = true)
     private String phone;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "country_code")
     private String countryCode;
 
 }
