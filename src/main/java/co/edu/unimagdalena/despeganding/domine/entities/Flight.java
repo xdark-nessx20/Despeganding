@@ -17,33 +17,32 @@ import java.util.Set;
 @Entity
 @Table(name = "flights")
 public class Flight {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "flight_id")
     private Long id;
 
     @Column(nullable = false, unique = true)
     private String number;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "departure_time")
     private OffsetDateTime departureTime;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "arrival_time")
     private OffsetDateTime arrivalTime;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "airline_id")
     private Airline airline;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "airport_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "origin_airport_id", nullable = false)
     private Airport origin;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "airport_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "destination_airport_id", nullable = false)
     private Airport destination;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
     @JoinTable(name = "tags_flights",
             joinColumns = @JoinColumn(name = "flight_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
@@ -52,6 +51,6 @@ public class Flight {
 
     public void addTag(Tag tag) {
         this.tags.add(tag);
-        tag.addFlight(this);
+        tag.getFlights().add(this);
     }
 }

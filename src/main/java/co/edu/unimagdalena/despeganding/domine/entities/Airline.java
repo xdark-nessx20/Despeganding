@@ -15,8 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "airlines")
 public class Airline {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "airline_id")
     private Long id;
 
@@ -26,7 +25,7 @@ public class Airline {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "flight", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
     private List<Flight> flights;
 
     public void addFlight(Flight flight) {

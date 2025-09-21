@@ -15,8 +15,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "booking_items")
 public class BookingItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "booking_item_id")
     private Long id;
 
@@ -30,12 +29,12 @@ public class BookingItem {
     @Column(nullable = false)
     private Integer segmentOrder;
 
-    @ManyToOne(optional = true, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "booking_id")
-    @Column(nullable = false)
     private Booking booking;
 
-    @Column(nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "flight_id")
     private Flight flight;
 
 

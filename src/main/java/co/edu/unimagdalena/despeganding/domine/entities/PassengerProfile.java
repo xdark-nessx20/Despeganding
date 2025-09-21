@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class PassengerProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "passengerProfile_id")
+    @Column(name = "passenger_profile_id")
     private Long id;
 
     @Column(nullable = false, unique = true)

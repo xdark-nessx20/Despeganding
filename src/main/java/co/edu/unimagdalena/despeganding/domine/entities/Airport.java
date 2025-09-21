@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "airports")
 public class Airport {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "airport_id", length = 3)
     private Long id;
 
@@ -26,6 +25,4 @@ public class Airport {
 
     @Column(nullable = false)
     private String city;
-
-
 }

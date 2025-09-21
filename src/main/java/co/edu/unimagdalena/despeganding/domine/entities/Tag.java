@@ -16,20 +16,14 @@ import java.util.Set;
 @Entity
 @Table(name = "tags")
 public class Tag {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "tag_id")
     private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
     @Builder.Default
     private Set<Flight> flights = new HashSet<>();
-
-    public void addFlight(Flight flight) {
-        flights.add(flight);
-    }
 }
