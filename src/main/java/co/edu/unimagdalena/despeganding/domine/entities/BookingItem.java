@@ -35,7 +35,8 @@ public class BookingItem {
     @Column(nullable = false)
     private Booking booking;
 
-    @Column(nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "flight_id")
     private Flight flight;
 
 

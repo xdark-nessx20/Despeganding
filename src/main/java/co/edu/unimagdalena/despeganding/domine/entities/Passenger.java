@@ -25,7 +25,7 @@ public class Passenger {
     private String email;
 
     @OneToOne @JoinColumn(name = "passengerProfile_id", unique = true)
-    private PassengerProfile profile;
+    private PassengerProfile passengerProfile;
 
 
 
