@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AirportRepositoryTest extends AbstractRepository{
-    @Autowired AirportRepository airportRepository;
+class AirportRepositoryTest extends AbstractRepository {
+    @Autowired
+    AirportRepository airportRepository;
 
-    @Test @DisplayName("Airport: find by code and by city")
+    @Test
+    @DisplayName("Airport: find by code and by city")
     void findByCodeAndCity() {
         //Given
         airportRepository.save(Airport.builder().code("BOG").city("Bogota").name("El Dorado").build());
