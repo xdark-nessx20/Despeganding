@@ -9,10 +9,12 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AirlineRepositoryTest extends AbstractRepository{
-    @Autowired AirlineRepository airlineRepository;
+class AirlineRepositoryTest extends AbstractRepository {
+    @Autowired
+    AirlineRepository airlineRepository;
 
-    @Test @DisplayName("Airline: find by code")
+    @Test
+    @DisplayName("Airline: find by code")
     void shouldFindByCode() {
         //Given
         airlineRepository.save(Airline.builder().code("DC").name("despegar.com").build());

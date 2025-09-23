@@ -1,4 +1,4 @@
 package co.edu.unimagdalena.despeganding.domain.repositories;
 
-public class PassengerProfileRepositoryTest extends AbstractRepository{
+public class PassengerProfileRepositoryTest extends AbstractRepository {
 }
