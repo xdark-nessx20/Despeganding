@@ -19,7 +19,7 @@ public class BookingItem {
     @Column(name = "booking_item_id")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Cabin cabin;
 
