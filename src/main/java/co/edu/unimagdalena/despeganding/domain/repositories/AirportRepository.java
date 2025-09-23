@@ -1,6 +1,6 @@
-package co.edu.unimagdalena.despeganding.domine.repositories;
+package co.edu.unimagdalena.despeganding.domain.repositories;
 
-import co.edu.unimagdalena.despeganding.domine.entities.Airport;
+import co.edu.unimagdalena.despeganding.domain.entities.Airport;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

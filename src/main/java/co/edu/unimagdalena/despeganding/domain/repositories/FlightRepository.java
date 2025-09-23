@@ -1,7 +1,7 @@
-package co.edu.unimagdalena.despeganding.domine.repositories;
+package co.edu.unimagdalena.despeganding.domain.repositories;
 
-import co.edu.unimagdalena.despeganding.domine.entities.Airport;
-import co.edu.unimagdalena.despeganding.domine.entities.Flight;
+import co.edu.unimagdalena.despeganding.domain.entities.Airport;
+import co.edu.unimagdalena.despeganding.domain.entities.Flight;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;

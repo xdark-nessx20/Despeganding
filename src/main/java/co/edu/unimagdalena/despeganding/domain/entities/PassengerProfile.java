@@ -1,4 +1,4 @@
-package co.edu.unimagdalena.despeganding.domine.entities;
+package co.edu.unimagdalena.despeganding.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

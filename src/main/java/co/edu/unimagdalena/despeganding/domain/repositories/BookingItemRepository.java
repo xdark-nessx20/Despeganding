@@ -1,7 +1,7 @@
-package co.edu.unimagdalena.despeganding.domine.repositories;
+package co.edu.unimagdalena.despeganding.domain.repositories;
 
-import co.edu.unimagdalena.despeganding.domine.entities.BookingItem;
-import co.edu.unimagdalena.despeganding.domine.entities.Cabin;
+import co.edu.unimagdalena.despeganding.domain.entities.BookingItem;
+import co.edu.unimagdalena.despeganding.domain.entities.Cabin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

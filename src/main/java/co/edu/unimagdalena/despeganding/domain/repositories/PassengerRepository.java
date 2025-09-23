@@ -1,6 +1,6 @@
-package co.edu.unimagdalena.despeganding.domine.repositories;
+package co.edu.unimagdalena.despeganding.domain.repositories;
 
-import co.edu.unimagdalena.despeganding.domine.entities.Passenger;
+import co.edu.unimagdalena.despeganding.domain.entities.Passenger;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +12,8 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long> {
 
     //Now with profile
     //Se me olvida despues, UPPER para que ingore las diferencias entre MAYUS y MAYUSN´T
-    @Query("SELECT p FROM Passenger p JOIN FETCH p.profile WHERE LOWER(p.email) = LOWER(:email)")
+    @Query("""
+        SELECT p FROM Passenger p
+        JOIN FETCH p.profile WHERE LOWER(p.email) = LOWER(:email)""")
     Optional<Passenger> findByEmailIgnoreCaseWithProfile(@Param("email") String email);
 }
