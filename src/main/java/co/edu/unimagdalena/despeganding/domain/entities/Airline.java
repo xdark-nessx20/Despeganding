@@ -25,7 +25,7 @@ public class Airline {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "airline", fetch = FetchType.LAZY)
     private List<Flight> flights;
 
     public void addFlight(Flight flight) {
