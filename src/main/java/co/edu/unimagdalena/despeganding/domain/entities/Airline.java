@@ -1,4 +1,4 @@
-package co.edu.unimagdalena.despeganding.domine.entities;
+package co.edu.unimagdalena.despeganding.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,18 +15,17 @@ import java.util.List;
 @Entity
 @Table(name = "airlines")
 public class Airline {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "airline_id")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 2)
     private String code;
 
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "flight", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "airline", fetch = FetchType.LAZY)
     private List<Flight> flights;
 
     public void addFlight(Flight flight) {
