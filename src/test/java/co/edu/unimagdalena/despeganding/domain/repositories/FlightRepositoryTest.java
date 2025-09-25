@@ -15,7 +15,7 @@ import org.springframework.data.domain.Pageable;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FlightRepositoryTest extends AbstractRepository{
@@ -25,17 +25,17 @@ public class FlightRepositoryTest extends AbstractRepository{
 
     private Flight flight_1, flight_2, flight_3,  flight_4;
     private Airline airline;
-    private Airport airport_1, airport_2, airport_3, airport_4;
-    private OffsetDateTime staticDate = OffsetDateTime.of(
+    private Airport airport_1, airport_3;
+    private final OffsetDateTime staticDate = OffsetDateTime.of(
         2025, 9, 23, 4, 0, 0,0, ZoneOffset.UTC);
 
     @BeforeEach
     void setUp() {
         airline = Airline.builder().name("despegar.com").code("DC").build();
         airport_1 = Airport.builder().code("BOG").name("El Dorado").city("Bogota").build();
-        airport_2 = Airport.builder().code("SMA").name("Simon Bolivar").city("Santa Marta").build();
+        Airport airport_2 = Airport.builder().code("SMA").name("Simon Bolivar").city("Santa Marta").build();
         airport_3 = Airport.builder().code("XDD").name("miAeropuerto").city("Soledad").build();
-        airport_4 = Airport.builder().code("TDF").name("Aero-hard").city("El Dificil").build();
+        Airport airport_4 = Airport.builder().code("TDF").name("Aero-hard").city("El Dificil").build();
 
         flight_1 = Flight.builder().airline(airline).origin(airport_1).destination(airport_2).departureTime(staticDate)
             .arrivalTime(staticDate.plusHours(2)).number("0001").build();

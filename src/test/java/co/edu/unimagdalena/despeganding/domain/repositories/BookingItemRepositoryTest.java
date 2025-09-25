@@ -55,7 +55,7 @@ class BookingItemRepositoryTest extends AbstractRepository {
         entityManager.persistAndFlush(flight2);
 
 
-        booking1 = Booking.builder().createdAt(OffsetDateTime.now()).updatedAt(OffsetDateTime.now()).passenger(passenger).build();
+        booking1 = Booking.builder().createdAt(OffsetDateTime.now()).passenger(passenger).build();
         entityManager.persistAndFlush(booking1);
 
         entityManager.clear();

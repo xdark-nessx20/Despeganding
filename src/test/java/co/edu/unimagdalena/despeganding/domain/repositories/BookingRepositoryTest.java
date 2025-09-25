@@ -13,7 +13,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Comparator;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BookingRepositoryTest extends AbstractRepository{
