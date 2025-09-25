@@ -14,7 +14,6 @@ import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByCreatedAtBetween(OffsetDateTime start, OffsetDateTime end);
-    List<Booking> findByUpdatedAtBetween(OffsetDateTime start, OffsetDateTime end);
     Page<Booking> findByPassenger_EmailIgnoreCaseOrderByCreatedAtDesc(String email, Pageable pageable);
 
     @EntityGraph(attributePaths = {"items", "items.flight", "passenger"})

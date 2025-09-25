@@ -23,9 +23,6 @@ public class Booking {
     @Column(nullable = false, name = "created_at")
     private OffsetDateTime createdAt;
 
-    @Column(nullable = false, name = "updated_at")
-    private OffsetDateTime updatedAt;
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "passenger_id")
     private Passenger passenger;
