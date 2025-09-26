@@ -13,7 +13,6 @@ public class FlightDTOs {
                                     List<SeatInventoryDTOs.SeatInventoryCreateRequest> seatsInventory) implements Serializable {}
 
     public record FlightUpdateRequest(@Nullable String number, OffsetDateTime departureTime, OffsetDateTime arrivalTime,
-                                    @Nullable Long airline_id, @Nullable Long origin_airport_id, @Nullable Long destination_airport_id,
                                     @Nullable Set<String> tagsNames) implements Serializable {}
 
     public record FlightResponse(Long id, String number, OffsetDateTime departureTime, OffsetDateTime arrivalTime,
