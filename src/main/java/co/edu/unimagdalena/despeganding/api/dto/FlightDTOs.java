@@ -15,5 +15,5 @@ public class FlightDTOs {
     //IDK if these are the right parameters
     public record FlightResponse(Long id, String number, OffsetDateTime departureTime, OffsetDateTime arrivalTime,
                                  Long airline_id, Long origin_airport_id, Long destination_airport_id,
-                                 Set<TagResponse> tags, Set<SeatInventoryResponse> seatsInventory) implements Serializable {}
+                                 Set<TagResponse> tags) implements Serializable {}
 }

@@ -3,20 +3,10 @@ package co.edu.unimagdalena.despeganding.services.mappers;
 import co.edu.unimagdalena.despeganding.domain.entities.*;
 import co.edu.unimagdalena.despeganding.api.dto.BookingDTOs.*;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 
 public class BookingMapper {
-    //Check out this method 'cause the professor doesn't have it
-    public static Booking toEntity(BookingCreateRequest request) {
-        var b = Booking.builder().createdAt(OffsetDateTime.now())
-                .passenger(passenger).build();
-
-        List<BookingItem> itemsToEntities = items.stream().map(item -> BookingItem.builder().cabin(Cabin.valueOf(item.cabin())).price(item.price())
-                .segmentOrder(item.segmentOrder()).booking(b).build()).toList();
-        itemsToEntities.forEach(b::addItem);
-        return b;
-    }
+    //There's no toEntity method 'cause it just receive the passenger_id. So, the service takes the responsibility
 
     public static BookingResponse toResponse(Booking entity) {
         var items = entity.getItems() == null? List.<BookingItemResponse>of() : entity.getItems().stream().map(BookingMapper::toItemResponse).toList();
@@ -27,10 +17,7 @@ public class BookingMapper {
     }
 
     /*----------------------------------------------------------------------------------------------------*/
-    //Check out this method 'cause the professor doesn't have it
-    public static BookingItem toItemEntity(BookingItemCreateRequest request) {
-        return BookingItem.builder().cabin(Cabin.valueOf(request.cabin().toUpperCase())).price(request.price()).build();
-    }
+    //ToEntity method is service's responsibility
 
     public static BookingItemResponse toItemResponse(BookingItem entity) {
         return new BookingItemResponse(entity.getId(), entity.getCabin().name(), entity.getPrice(), entity.getSegmentOrder(),

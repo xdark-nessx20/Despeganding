@@ -1,7 +1,6 @@
 package co.edu.unimagdalena.despeganding.services.mappers;
 
 import co.edu.unimagdalena.despeganding.domain.entities.Cabin;
-import co.edu.unimagdalena.despeganding.domain.entities.Flight;
 import co.edu.unimagdalena.despeganding.domain.entities.SeatInventory;
 import  co.edu.unimagdalena.despeganding.api.dto.SeatInventoryDTOs.*;
 
@@ -13,7 +12,7 @@ public class SeatInventoryMapper {
     public static SeatInventoryResponse toResponse(SeatInventory seatInventory) {
         return new SeatInventoryResponse(
                 seatInventory.getId(), seatInventory.getCabin().name(),
-                seatInventory.getTotalSeats(), seatInventory.getAvailableSeats()
+                seatInventory.getTotalSeats(), seatInventory.getAvailableSeats(), seatInventory.getFlight().getId()
         );
     }
 
