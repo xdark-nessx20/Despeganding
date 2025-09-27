@@ -13,7 +13,7 @@ public class PassengerMapper {
             .email(passengerCreateRequest.email()).profile(profile).build();
     }
 
-    public static PassengerResponse toDTO(Passenger passenger){
+    public static PassengerResponse toResponse(Passenger passenger){
         var p = passenger.getProfile();
         var dto_profile = p == null ? null : new PassengerProfileDto(p.getPhone(), p.getCountryCode());
         return new PassengerResponse(passenger.getId(),  passenger.getFullName(), passenger.getEmail(), dto_profile);

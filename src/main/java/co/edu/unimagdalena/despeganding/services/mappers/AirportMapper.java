@@ -8,7 +8,7 @@ public class AirportMapper {
         return Airport.builder().code(request.code()).name(request.name()).city(request.city()).build();
     }
 
-    public static AirportResponse toDTO(Airport entity){
+    public static AirportResponse toResponse(Airport entity){
         return new AirportResponse(entity.getId(), entity.getCode(),  entity.getName(), entity.getCity());
     }
 

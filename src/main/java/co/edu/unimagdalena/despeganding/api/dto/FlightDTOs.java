@@ -1,21 +1,19 @@
 package co.edu.unimagdalena.despeganding.api.dto;
 
 import jakarta.annotation.Nullable;
-
+import co.edu.unimagdalena.despeganding.api.dto.TagDTOs.TagResponse;
+import co.edu.unimagdalena.despeganding.api.dto.SeatInventoryDTOs.SeatInventoryResponse;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.Set;
 
 public class FlightDTOs {
-    public record FlightCreateRequest(String number, OffsetDateTime departureTime, OffsetDateTime arrivalTime, Long airline_id,
-                                    Long origin_airport_id, Long destination_airport_id, Set<String> tagsNames,
-                                    List<SeatInventoryDTOs.SeatInventoryCreateRequest> seatsInventory) implements Serializable {}
+    public record FlightCreateRequest(String number, OffsetDateTime departureTime, OffsetDateTime arrivalTime) implements Serializable {}
 
-    public record FlightUpdateRequest(@Nullable String number, OffsetDateTime departureTime, OffsetDateTime arrivalTime,
-                                    @Nullable Set<String> tagsNames) implements Serializable {}
+    public record FlightUpdateRequest(@Nullable String number, OffsetDateTime departureTime, OffsetDateTime arrivalTime) implements Serializable {}
 
+    //IDK if these are the right parameters
     public record FlightResponse(Long id, String number, OffsetDateTime departureTime, OffsetDateTime arrivalTime,
                                  Long airline_id, Long origin_airport_id, Long destination_airport_id,
-                                 Set<TagDTOs.TagResponse> tags) implements Serializable {}
+                                 Set<TagResponse> tags, Set<SeatInventoryResponse> seatsInventory) implements Serializable {}
 }
