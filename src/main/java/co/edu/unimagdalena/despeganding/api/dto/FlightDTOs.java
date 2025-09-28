@@ -1,6 +1,6 @@
 package co.edu.unimagdalena.despeganding.api.dto;
 
-import jakarta.annotation.Nullable;
+import jakarta.annotation.Nonnull;
 import co.edu.unimagdalena.despeganding.api.dto.TagDTOs.TagResponse;
 
 import java.io.Serializable;
@@ -8,9 +8,9 @@ import java.time.OffsetDateTime;
 import java.util.Set;
 
 public class FlightDTOs {
-    public record FlightCreateRequest(String number, OffsetDateTime departureTime, OffsetDateTime arrivalTime) implements Serializable {}
+    public record FlightCreateRequest(@Nonnull String number, @Nonnull OffsetDateTime departureTime, @Nonnull OffsetDateTime arrivalTime) implements Serializable {}
 
-    public record FlightUpdateRequest(@Nullable String number, OffsetDateTime departureTime, OffsetDateTime arrivalTime) implements Serializable {}
+    public record FlightUpdateRequest(String number, @Nonnull OffsetDateTime departureTime, @Nonnull OffsetDateTime arrivalTime, Long destination_airport_id) implements Serializable {}
 
     //IDK if these are the right parameters
     public record FlightResponse(Long id, String number, OffsetDateTime departureTime, OffsetDateTime arrivalTime,
