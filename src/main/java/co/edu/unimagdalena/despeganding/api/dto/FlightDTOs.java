@@ -2,7 +2,7 @@ package co.edu.unimagdalena.despeganding.api.dto;
 
 import jakarta.annotation.Nullable;
 import co.edu.unimagdalena.despeganding.api.dto.TagDTOs.TagResponse;
-import co.edu.unimagdalena.despeganding.api.dto.SeatInventoryDTOs.SeatInventoryResponse;
+
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.Set;

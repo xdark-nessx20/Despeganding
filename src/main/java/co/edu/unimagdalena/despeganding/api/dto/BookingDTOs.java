@@ -13,7 +13,7 @@ public class BookingDTOs {
                                   List<BookingItemResponse> items) implements Serializable{}
 
 
-    public record BookingItemCreateRequest(Long flight_id, String cabin, BigDecimal price, Integer segmentOrder) implements Serializable {}
+    public record BookingItemCreateRequest(String cabin, BigDecimal price, Integer segmentOrder) implements Serializable {}
 
     public record BookingItemUpdateRequest(String cabin, BigDecimal price, Integer segmentOrder) implements Serializable {}
 

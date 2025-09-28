@@ -29,4 +29,6 @@ public class BookingMapper {
         if (request.price() != null) entity.setPrice(request.price());
         if (request.segmentOrder() != null) entity.setSegmentOrder(request.segmentOrder());
     }
+
+    public static void addItem(BookingItem item, Booking booking){ booking.addItem(item); }
 }

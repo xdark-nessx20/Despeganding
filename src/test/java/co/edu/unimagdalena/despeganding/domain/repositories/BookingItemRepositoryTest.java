@@ -119,9 +119,9 @@ class BookingItemRepositoryTest extends AbstractRepository {
                 .flight(flight1).build());
 
         // When / Then
-        Long economyCount = bookingItemRepo.countReservedSeatsByFlightAndCabin(flight1.getId(), Cabin.ECONOMY);
-        Long businessCount = bookingItemRepo.countReservedSeatsByFlightAndCabin(flight1.getId(), Cabin.BUSINESS);
-        Long premiumCount = bookingItemRepo.countReservedSeatsByFlightAndCabin(flight1.getId(), Cabin.PREMIUM);
+        Long economyCount = bookingItemRepo.countReservedSeatsByFlight_IdAndCabin(flight1.getId(), Cabin.ECONOMY);
+        Long businessCount = bookingItemRepo.countReservedSeatsByFlight_IdAndCabin(flight1.getId(), Cabin.BUSINESS);
+        Long premiumCount = bookingItemRepo.countReservedSeatsByFlight_IdAndCabin(flight1.getId(), Cabin.PREMIUM);
 
         assertThat(economyCount).isEqualTo(2);
         assertThat(businessCount).isEqualTo(1);
