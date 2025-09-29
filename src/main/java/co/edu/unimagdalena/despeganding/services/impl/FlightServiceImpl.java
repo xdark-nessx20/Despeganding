@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 
 import java.time.OffsetDateTime;
+import java.util.Optional;
+
 import co.edu.unimagdalena.despeganding.api.dto.FlightDTOs.*;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -75,11 +77,11 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override @Transactional(readOnly = true)
-    public Page<FlightResponse> listScheduledFlights(@Nonnull Long origin_airport_id, @Nonnull Long destination_airport_id, OffsetDateTime from, OffsetDateTime to, Pageable pageable) {
+    public Page<FlightResponse> listScheduledFlights(Long origin_airport_id, Long destination_airport_id, @Nonnull OffsetDateTime from, @Nonnull OffsetDateTime to, Pageable pageable) {
         if (from.isAfter(to)) throw new IllegalArgumentException("\"From\" date is after \"to\" date");
 
-        var origin =  airportRepository.findById(origin_airport_id);
-        var destination =  airportRepository.findById(destination_airport_id);
+        var origin = (origin_airport_id != null)?  airportRepository.findById(origin_airport_id): Optional.<Airport>empty();
+        var destination = (destination_airport_id != null)? airportRepository.findById(destination_airport_id) : Optional.<Airport>empty();
 
         var flights = (origin.isPresent() && destination.isPresent())?
                 flightRepository.findByOrigin_CodeAndDestination_CodeAndDepartureTimeBetween(origin.get().getCode(), destination.get().getCode(), from, to, pageable):
