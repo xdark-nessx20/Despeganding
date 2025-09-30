@@ -17,6 +17,7 @@ import java.util.List;
 @Service @RequiredArgsConstructor
 public class AirportServiceImpl implements AirportService {
     private final AirportRepository airportRepository;
+
     @Override @Transactional
     public AirportResponse createAirport(AirportCreateRequest request) {
         var airport = AirportMapper.toEntity(request);

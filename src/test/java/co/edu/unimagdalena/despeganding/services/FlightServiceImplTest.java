@@ -61,13 +61,14 @@ public class FlightServiceImplTest {
         var now = OffsetDateTime.now();
         var destination = Optional.of(Airport.builder().id(1L).code("XD").name("Zzzairport").city("Soledad").build());
         var destination_2 = Optional.of(Airport.builder().id(2L).code("DX").name("Derivairport").city("Malambo").build());
+
         when(airportRepository.findById(1L)).thenReturn(destination);
         when(airportRepository.findById(2L)).thenReturn(destination_2);
         when(flightRepository.findById(101L)).thenReturn(Optional.of(Flight.builder().id(101L).number("XD0001").departureTime(now).arrivalTime(now.plusHours(7))
                 .destination(destination.get()).build()));
         when(flightRepository.save(any())).thenAnswer(invocation -> invocation.<Flight>getArgument(0));
 
-        var response = flightService.updateFlight(new FlightUpdateRequest("XD0002", null, null, 2L), 101L);
+        var response = flightService.updateFlight(new FlightUpdateRequest("XD0002", null, null), 101L, 2L);
 
         assertThat(response).isNotNull();
         assertThat(response.id()).isEqualTo(101L);
@@ -116,8 +117,8 @@ public class FlightServiceImplTest {
         var response = flightService.listFlightsByAirline(1L, Pageable.unpaged());
 
         assertThat(response).hasSize(3);
-        assertThat(response).extracting(FlightResponse::airline_id).containsExactly(1L);
-
+        assertThat(response).extracting(FlightResponse::airline_id)
+                .allMatch(id -> id.equals(101L));
     }
 
     @Test

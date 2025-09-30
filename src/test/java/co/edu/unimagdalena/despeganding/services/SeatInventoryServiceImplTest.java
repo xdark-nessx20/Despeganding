@@ -84,9 +84,8 @@ public class SeatInventoryServiceImplTest {
         var response = seatInventoryService.listSeatInventoriesByFlight(1L);
 
         assertThat(response).hasSize(3);
-        assertThat(response).allSatisfy(seatInventory -> {
-            assertThat(seatInventory.flight_id()).isEqualTo(1L);
-        });
+        assertThat(response).extracting(SeatInventoryResponse::flight_id)
+                        .allMatch(flight_id -> flight_id.equals(1L));
     }
 
     @Test

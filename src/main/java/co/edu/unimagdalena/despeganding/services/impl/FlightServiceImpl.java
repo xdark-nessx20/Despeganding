@@ -46,7 +46,7 @@ public class FlightServiceImpl implements FlightService {
         f.setOrigin(origin_airport);
         f.setDestination(destination_airport);
 
-        return FlightMapper.toResponse(f);
+        return FlightMapper.toResponse(flightRepository.save(f));
     }
 
     @Override @Transactional(readOnly = true)
@@ -57,14 +57,15 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override //A flight just can update his destination airport, I looked into it
-    public FlightResponse updateFlight(FlightUpdateRequest request, @Nonnull Long id) {
+    public FlightResponse updateFlight(FlightUpdateRequest request, @Nonnull Long id, Long destination_airport_id) {
         var flight = flightRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Flight %d not found.".formatted(id))
         );
         FlightMapper.patch(flight, request);
-        if (request.destination_airport_id() != null){
-            var destination = airportRepository.findById(request.destination_airport_id()).orElseThrow(
-                    () -> new NotFoundException("Airport %d not found.".formatted(request.destination_airport_id()))
+
+        if (destination_airport_id != null){
+            var destination = airportRepository.findById(destination_airport_id).orElseThrow(
+                    () -> new NotFoundException("Airport %d not found.".formatted(destination_airport_id))
             );
             flight.setDestination(destination);
         }
@@ -89,7 +90,7 @@ public class FlightServiceImpl implements FlightService {
                         flightRepository.filterByOriginAndDestinationOptionalAndDepartureTimeBetween(
                                 origin.map(Airport::getCode).orElse(null), destination.map(Airport::getCode).orElse(null), from, to
                         )
-                );
+                ); //There's no pageable, should I put in there?
 
         return flights.map(FlightMapper::toResponse);
     }

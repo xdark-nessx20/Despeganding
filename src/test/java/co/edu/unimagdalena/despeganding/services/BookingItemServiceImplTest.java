@@ -67,7 +67,8 @@ public class BookingItemServiceImplTest {
         var response = bookingItemServiceImpl.listBookingItemsByBooking(101L);
 
         assertThat(response).hasSize(3);
-        assertThat(response).allSatisfy(bookingItem -> assertThat(bookingItem.booking_id()).isEqualTo(101L));
+        assertThat(response).extracting(BookingItemResponse::booking_id)
+                .allMatch(id -> id.equals(101L));
     }
 
     //IDK if we've to test all service methods... 'cause I think so, but, the professor wants to?

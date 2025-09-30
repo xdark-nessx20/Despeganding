@@ -30,5 +30,5 @@ public class BookingMapper {
         if (request.segmentOrder() != null) entity.setSegmentOrder(request.segmentOrder());
     }
 
-    public static void addItem(BookingItem item, Booking booking){ booking.addItem(item); }
+    public static void addItem(BookingItem item, Booking booking){ booking.addItem(item); item.setBooking(booking); }
 }

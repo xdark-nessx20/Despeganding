@@ -46,7 +46,7 @@ public class TagServiceImplTest {
 
         var response = tagService.listAllTags();
 
-        assertThat(response.size()).isEqualTo(4);
+        assertThat(response).hasSize(4);
         assertThat(response).extracting(TagResponse::name).containsExactly("pruebi-tag", "tag-xd", "tag-zzz", "miTag");
     }
 
@@ -60,7 +60,7 @@ public class TagServiceImplTest {
 
         var response = tagService.listTagsByNameIn(tagNames);
 
-        assertThat(response.size()).isEqualTo(2);
+        assertThat(response).hasSize(2);
         assertThat(response).extracting(TagResponse::name).containsExactly("pruebi-tag", "miTag");
     }
 }

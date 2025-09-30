@@ -53,7 +53,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingResponse getBookingWithAllDetails(@Nonnull Long id) {
-        return bookingRepository.findById(id).map(BookingMapper::toResponse).orElseThrow(
+        return bookingRepository.searchWithAllDetails(id).map(BookingMapper::toResponse).orElseThrow(
                 () -> new NotFoundException("Booking %d not found.".formatted(id))
         );
     }

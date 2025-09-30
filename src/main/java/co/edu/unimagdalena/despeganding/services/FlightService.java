@@ -11,7 +11,7 @@ public interface FlightService {
     //Basic CRUD
     FlightResponse createFlight(FlightCreateRequest request, Long airline_id, Long origin_airport_id, Long destination_airport_id);
     FlightResponse getFlight(Long id);
-    FlightResponse updateFlight(FlightUpdateRequest request, Long id);
+    FlightResponse updateFlight(FlightUpdateRequest request, Long id, Long destination_airport_id);
     void deleteFlight(Long id);
     //--------------------------------------------------------//
     //This method looks for flights by departureTime between two dates, and also, with an origin and destination (both can be optional).
