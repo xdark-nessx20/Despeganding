@@ -93,7 +93,7 @@ public class FlightRepositoryTest extends AbstractRepository{
     @Test @DisplayName("Flight: filter flights by departure time between two dates, and optionally, by origin and destination airport")
     void shouldFilterByDepartureTimeBetweenAndOriginAndDestinationOptional() {
         //When
-        List<Flight> loaded = flightRepository.filterByOriginAndDestinationOptionalAndDepartureTimeBetween(airport_1, null,
+        List<Flight> loaded = flightRepository.filterByOriginAndDestinationOptionalAndDepartureTimeBetween(airport_1.getCode(), null,
             staticDate.plusHours(1),  staticDate.plusWeeks(1).plusHours(5));
 
         //Then

@@ -64,7 +64,7 @@ public class BookingServiceImpl implements BookingService {
                 () -> new NotFoundException("Booking %d not found.".formatted(id))
         );
         if (passenger_id != null) {
-            var new_passenger = passengerRepository.findById(id).orElseThrow(
+            var new_passenger = passengerRepository.findById(passenger_id).orElseThrow(
                     () -> new NotFoundException("Passenger %d not found.".formatted(id))
             );
             booking.setPassenger(new_passenger);

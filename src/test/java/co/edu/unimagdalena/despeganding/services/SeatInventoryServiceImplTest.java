@@ -51,7 +51,7 @@ public class SeatInventoryServiceImplTest {
     void shouldUpdateSeatInventoryAndMapToResponse(){
         when(seatInventoryRepository.findById(10L)).thenReturn(Optional.of(
                 SeatInventory.builder().id(10L).cabin(Cabin.valueOf("ECONOMY")).totalSeats(45)
-                .availableSeats(20).build()
+                .availableSeats(20).flight(Flight.builder().id(1555L).build()).build()
         ));
         when(seatInventoryRepository.save(any())).thenAnswer(invocation -> invocation.<SeatInventory>getArgument(0));
 

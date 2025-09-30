@@ -56,8 +56,8 @@ public class BookingServiceImplTest {
                 .email("hitlermoreno@example.com").build());
         when(bookingRepository.findById(101L)).thenReturn(Optional.of(Booking.builder().id(101L)
                 .createdAt(OffsetDateTime.now().minusDays(1)).passenger(passenger.get()).build()));
-        when(passengerRepository.findById(1L)).thenReturn(passenger);
-        when(bookingRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+        when(passengerRepository.findById(2L)).thenReturn(new_passenger);
+        when(bookingRepository.save(any(Booking.class))).thenAnswer(inv -> inv.getArgument(0));
 
         var response = bookingService.updateBooking(101L, 2L);
 
@@ -115,13 +115,13 @@ public class BookingServiceImplTest {
         var flight = Flight.builder().id(11L).number("XD0001").origin(origin.get()).destination(destination.get())
                 .departureTime(now).arrivalTime(now.plusHours(5)).build();
 
-        when(bookingRepository.findById(101L)).thenReturn(booking);
         BookingMapper.addItem(BookingItem.builder().id(10001L).cabin(Cabin.PREMIUM)
                 .price(new BigDecimal("10000000")).segmentOrder(1).flight(flight).build(), booking.get());
         BookingMapper.addItem(BookingItem.builder().id(10002L).cabin(Cabin.BUSINESS)
                 .price(new BigDecimal("7500000")).segmentOrder(2).flight(flight).build(), booking.get());
+        when(bookingRepository.searchWithAllDetails(101L)).thenReturn(booking);
 
-        var response = bookingService.getBookingWithAllDetails(101L);
+        var response = bookingService.getBookingWithAllDetails(booking.get().getId());
         var items = response.items();
 
         assertThat(response.id()).isEqualTo(101L);

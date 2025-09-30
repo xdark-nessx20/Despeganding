@@ -47,11 +47,6 @@ public class BookingItemServiceImplTest {
     }
 
     @Test
-    void shouldUpdateBookingItemAndMapToResponse(){
-
-    }
-
-    @Test
     void shouldListBookingItemsByBooking(){
         var booking = Optional.of(Booking.builder().id(101L).createdAt(OffsetDateTime.now()).build());
         var booking_2 = Optional.of(Booking.builder().id(102L).createdAt(OffsetDateTime.now()).build());
