@@ -138,7 +138,7 @@ public class FlightServiceImplTest {
         //Response 2
         assertThat(response_2).hasSize(2);
         assertThat(response_2).extracting(FlightResponse::origin_airport_id).containsExactly(1L, 1L);
-        assertThat(response_1).extracting(FlightResponse::departureTime).allMatch(
+        assertThat(response_2).extracting(FlightResponse::departureTime).allMatch(
                 dep_time -> dep_time.isAfter(dep_from_time_2) && dep_time.isBefore(dep_to_time_2)
         );
     }
