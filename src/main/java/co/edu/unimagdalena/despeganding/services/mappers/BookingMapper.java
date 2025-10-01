@@ -1,34 +1,42 @@
 package co.edu.unimagdalena.despeganding.services.mappers;
 
-import co.edu.unimagdalena.despeganding.domain.entities.*;
+
 import co.edu.unimagdalena.despeganding.api.dto.BookingDTOs.*;
+import co.edu.unimagdalena.despeganding.domain.entities.Booking;
+import co.edu.unimagdalena.despeganding.domain.entities.BookingItem;
+import org.mapstruct.*;
 
-import java.util.List;
+@Mapper(componentModel = "spring")
+public interface BookingMapper {
 
-public class BookingMapper {
-    //There's no toEntity method 'cause it just receive the passenger_id. So, the service takes the responsibility
+    // Booking
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", expression = "java(java.time.OffsetDateTime.now())")
+    @Mapping(target = "passenger", ignore = true)
+    @Mapping(target = "items", ignore = true)
+    Booking toEntity(BookingCreateRequest request);
 
-    public static BookingResponse toResponse(Booking entity) {
-        var items = entity.getItems() == null? List.<BookingItemResponse>of() : entity.getItems().stream().map(BookingMapper::toItemResponse).toList();
-        var passengerName = entity.getPassenger() == null? null: entity.getPassenger().getFullName();
-        var passengerEmail = entity.getPassenger() == null? null: entity.getPassenger().getEmail();
+    @Mapping(source = "passenger.fullName", target = "passenger_name")
+    @Mapping(source = "passenger.email", target = "passenger_email")
+    @Mapping(source = "items", target = "items")
+    BookingResponse toResponse(Booking booking);
 
-        return new BookingResponse(entity.getId(), entity.getCreatedAt(), passengerName, passengerEmail, items);
-    }
 
-    /*----------------------------------------------------------------------------------------------------*/
-    //ToEntity method is service's responsibility
+    //Booking Item
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "booking", ignore = true)
+    @Mapping(target = "flight", ignore = true)
+    BookingItem toItemEntity(BookingItemCreateRequest request);
 
-    public static BookingItemResponse toItemResponse(BookingItem entity) {
-        return new BookingItemResponse(entity.getId(), entity.getCabin().name(), entity.getPrice(), entity.getSegmentOrder(), entity.getBooking().getId(),
-                entity.getFlight().getId(), entity.getFlight().getNumber());
-    }
+    @Mapping(source = "booking.id", target = "booking_id")
+    @Mapping(source = "flight.id", target = "flight_id")
+    @Mapping(source = "flight.number", target = "flight_number")
+    BookingItemResponse toItemResponse(BookingItem item);
 
-    public static void itemPatch(BookingItem entity, BookingItemUpdateRequest request) {
-        if (request.cabin() != null) entity.setCabin(Cabin.valueOf(request.cabin().toUpperCase()));
-        if (request.price() != null) entity.setPrice(request.price());
-        if (request.segmentOrder() != null) entity.setSegmentOrder(request.segmentOrder());
-    }
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "booking", ignore = true)
+    @Mapping(target = "flight", ignore = true)
+    void patch(BookingItemUpdateRequest request, @MappingTarget BookingItem item);
 
-    public static void addItem(BookingItem item, Booking booking){ booking.addItem(item); item.setBooking(booking); }
 }

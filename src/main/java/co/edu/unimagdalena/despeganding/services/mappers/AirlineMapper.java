@@ -2,19 +2,19 @@ package co.edu.unimagdalena.despeganding.services.mappers;
 
 import co.edu.unimagdalena.despeganding.api.dto.AirlineDTOs.*;
 import co.edu.unimagdalena.despeganding.domain.entities.Airline;
+import org.mapstruct.*;
 
-public class AirlineMapper {
-    public static Airline toEntity(AirlineCreateRequest request){
-        return Airline.builder().code(request.code()).name(request.name()).build();
-    }
+@Mapper(componentModel = "spring")
+public interface AirlineMapper {
 
-    public static AirlineResponse toResponse(Airline entity){
-        //Mm, this is something weird, i´ll check it out later
-        return new AirlineResponse(entity.getId(), entity.getCode(), entity.getName());
-    }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "flights", ignore = true)
+    Airline toEntity(AirlineCreateRequest request);
 
-    public static void patch(Airline entity, AirlineUpdateRequest request){
-        if (request.code() != null) entity.setCode(request.code());
-        if (request.name() != null) entity.setName(request.name());
-    }
+    AirlineResponse toResponse(Airline airline);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "flights", ignore = true)
+    void patch(AirlineUpdateRequest request, @MappingTarget Airline entity);
 }

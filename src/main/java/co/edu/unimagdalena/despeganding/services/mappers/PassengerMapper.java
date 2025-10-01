@@ -3,33 +3,35 @@ package co.edu.unimagdalena.despeganding.services.mappers;
 import co.edu.unimagdalena.despeganding.api.dto.PassengerDTOs.*;
 import co.edu.unimagdalena.despeganding.domain.entities.Passenger;
 import co.edu.unimagdalena.despeganding.domain.entities.PassengerProfile;
+import org.mapstruct.*;
 
-public class PassengerMapper {
-    public static Passenger toEntity(PassengerCreateRequest passengerCreateRequest) {
-        var profile = passengerCreateRequest.profile() == null ? null :
-            PassengerProfile.builder().phone(passengerCreateRequest.profile().phone())
-            .countryCode(passengerCreateRequest.profile().countryCode()).build();
-        return Passenger.builder().fullName(passengerCreateRequest.fullName())
-            .email(passengerCreateRequest.email()).profile(profile).build();
-    }
+@Mapper(componentModel = "spring")
+public interface PassengerMapper {
 
-    public static PassengerResponse toResponse(Passenger passenger){
-        var p = passenger.getProfile();
-        var dto_profile = p == null ? null : new PassengerProfileDto(p.getPhone(), p.getCountryCode());
-        return new PassengerResponse(passenger.getId(),  passenger.getFullName(), passenger.getEmail(), dto_profile);
-    }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(source = "profile", target = "profile")
+    Passenger toEntity(PassengerCreateRequest request);
 
-    public static void patch(Passenger entity, PassengerUpdateRequest request) {
-        if (request.fullName() != null) entity.setFullName(request.fullName());
-        if (request.email() != null) entity.setEmail(request.email());
+    PassengerResponse toResponse(Passenger passenger);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    void patch(PassengerUpdateRequest request, @MappingTarget Passenger entity);
+
+    @AfterMapping
+    default void updateProfile(PassengerUpdateRequest request, @MappingTarget Passenger entity) {
         if (request.profile() != null) {
-            var entityProfile =  entity.getProfile();
-            if (entityProfile == null) {
-                entityProfile = new PassengerProfile();
-                entity.setProfile(entityProfile);
+            if (entity.getProfile() == null) {
+                entity.setProfile(new PassengerProfile());
             }
-            if (request.profile().phone() != null) entityProfile.setPhone(request.profile().phone());
-            if (request.profile().countryCode() != null) entityProfile.setCountryCode(request.profile().countryCode());
+            patchProfile(request.profile(), entity.getProfile());
         }
     }
+
+    @Mapping(target = "id", ignore = true)
+    PassengerProfile toProfileEntity(PassengerProfileDto profileDto);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    void patchProfile(PassengerProfileDto profileDto, @MappingTarget PassengerProfile profile);
 }

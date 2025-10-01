@@ -2,12 +2,14 @@ package co.edu.unimagdalena.despeganding.services.mappers;
 
 import co.edu.unimagdalena.despeganding.api.dto.TagDTOs.*;
 import co.edu.unimagdalena.despeganding.domain.entities.Tag;
+import org.mapstruct.*;
 
-public class TagMapper {
-    public static Tag toEntity(TagCreateRequest request){
-        return  Tag.builder().name(request.name()).build();
-    }
-    public static TagResponse toResponse(Tag tag){
-        return new TagResponse(tag.getId(), tag.getName());
-    }
+@Mapper(componentModel = "spring")
+public interface TagMapper {
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "flights", ignore = true)
+    Tag toEntity(TagCreateRequest request);
+
+    TagResponse toResponse(Tag tag);
 }
