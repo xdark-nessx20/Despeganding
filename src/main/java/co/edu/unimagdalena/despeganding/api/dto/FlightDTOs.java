@@ -8,7 +8,8 @@ import java.time.OffsetDateTime;
 import java.util.Set;
 
 public class FlightDTOs {
-    public record FlightCreateRequest(@Nonnull String number, @Nonnull OffsetDateTime departureTime, @Nonnull OffsetDateTime arrivalTime) implements Serializable {}
+    public record FlightCreateRequest(@Nonnull String number, @Nonnull OffsetDateTime departureTime, @Nonnull OffsetDateTime arrivalTime,
+                                      @Nonnull Long airline_id, @Nonnull Long origin_airport_id, @Nonnull Long destination_airport_id) implements Serializable {}
 
     public record FlightUpdateRequest(String number, OffsetDateTime departureTime, OffsetDateTime arrivalTime) implements Serializable {}
 
