@@ -17,36 +17,37 @@ import java.util.List;
 @Service @RequiredArgsConstructor
 public class AirportServiceImpl implements AirportService {
     private final AirportRepository airportRepository;
+    private final AirportMapper airportMapper;
 
     @Override @Transactional
     public AirportResponse createAirport(AirportCreateRequest request) {
-        var airport = AirportMapper.toEntity(request);
-        return AirportMapper.toResponse(airportRepository.save(airport));
+        var airport = airportMapper.toEntity(request);
+        return airportMapper.toResponse(airportRepository.save(airport));
     }
 
     @Override
     public AirportResponse getAirport(@Nonnull Long id) {
-        return airportRepository.findById(id).map(AirportMapper::toResponse)
+        return airportRepository.findById(id).map(airportMapper::toResponse)
                 .orElseThrow(() -> new NotFoundException("Airport %d not found.".formatted(id)));
     }
 
     @Override
     public AirportResponse getAirportByCode(@Nonnull String code) {
-        return airportRepository.findByCode(code).map(AirportMapper::toResponse)
+        return airportRepository.findByCode(code).map(airportMapper::toResponse)
                 .orElseThrow(() -> new NotFoundException("Airport with code %s not found.".formatted(code)));
     }
 
     @Override
     public List<AirportResponse> getCityAirports(@Nonnull String city) {
-        return airportRepository.findByCity(city).stream().map(AirportMapper::toResponse).toList();
+        return airportRepository.findByCity(city).stream().map(airportMapper::toResponse).toList();
     }
 
     @Override @Transactional
     public AirportResponse updateAirport(@Nonnull Long id, AirportUpdateRequest request) {
         var airport = airportRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Airport %d not found.".formatted(id)));
-        AirportMapper.patch(airport, request);
-        return AirportMapper.toResponse(airportRepository.save(airport));
+        airportMapper.patch(request, airport);
+        return airportMapper.toResponse(airportRepository.save(airport));
     }
 
     @Override @Transactional
@@ -56,6 +57,6 @@ public class AirportServiceImpl implements AirportService {
 
     @Override
     public Page<AirportResponse> listAllAirports(Pageable pageable) {
-        return airportRepository.findAll(pageable).map(AirportMapper::toResponse);
+        return airportRepository.findAll(pageable).map(airportMapper::toResponse);
     }
 }

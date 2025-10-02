@@ -15,16 +15,18 @@ import java.util.List;
 @Service @RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
     private final TagRepository tagRepository;
+    private final TagMapper tagMapper;
 
     @Override
     public TagResponse createTag(TagCreateRequest request) {
-        var tag = TagMapper.toEntity(request);
-        return TagMapper.toResponse(tagRepository.save(tag));
+        var tag = tagMapper.toEntity(request);
+        return tagMapper.toResponse(tagRepository.save(tag));
     }
 
     @Override
     public TagResponse getTag(Long id) {
-        return tagRepository.findById(id).map(TagMapper::toResponse).orElseThrow(() -> new NotFoundException("Tag %d not found".formatted(id)));
+        return tagRepository.findById(id).map(tagMapper::toResponse).orElseThrow(
+                () -> new NotFoundException("Tag %d not found".formatted(id)));
     }
 
     @Override
@@ -34,11 +36,11 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<TagResponse> listAllTags() {
-        return tagRepository.findAll().stream().map(TagMapper::toResponse).toList();
+        return tagRepository.findAll().stream().map(tagMapper::toResponse).toList();
     }
 
     @Override
     public List<TagResponse> listTagsByNameIn(Collection<String> names) {
-        return tagRepository.findByNameIn(names).stream().map(TagMapper::toResponse).toList();
+        return tagRepository.findByNameIn(names).stream().map(tagMapper::toResponse).toList();
     }
 }

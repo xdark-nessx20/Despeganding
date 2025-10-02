@@ -18,20 +18,21 @@ import java.util.List;
 public class SeatInventoryServiceImpl implements SeatInventoryService {
     private final SeatInventoryRepository seatInventoryRepository;
     private final FlightRepository flightRepository;
+    private final SeatInventoryMapper seatInventoryMapper;
 
     @Override @Transactional
     public SeatInventoryResponse createSeatInventory(@Nonnull Long flight_id, SeatInventoryCreateRequest request) {
         var flight = flightRepository.findById(flight_id).orElseThrow(
                 () -> new NotFoundException("Flight %d not found.".formatted(flight_id))
         );
-        var entitySeat = SeatInventoryMapper.toEntity(request);
+        var entitySeat = seatInventoryMapper.toEntity(request);
         entitySeat.setFlight(flight);
-        return SeatInventoryMapper.toResponse(seatInventoryRepository.save(entitySeat));
+        return seatInventoryMapper.toResponse(seatInventoryRepository.save(entitySeat));
     }
 
     @Override
     public SeatInventoryResponse getSeatInventory(@Nonnull Long id) {
-        return seatInventoryRepository.findById(id).map(SeatInventoryMapper::toResponse).orElseThrow(
+        return seatInventoryRepository.findById(id).map(seatInventoryMapper::toResponse).orElseThrow(
                 () -> new NotFoundException("SeatInventory %d not found.".formatted(id))
         );
     }
@@ -41,8 +42,8 @@ public class SeatInventoryServiceImpl implements SeatInventoryService {
         var seatInventory = seatInventoryRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("SeatInventory %d not found.".formatted(id))
         );
-        SeatInventoryMapper.patch(seatInventory, request);
-        return SeatInventoryMapper.toResponse(seatInventoryRepository.save(seatInventory));
+        seatInventoryMapper.patch(request, seatInventory);
+        return seatInventoryMapper.toResponse(seatInventoryRepository.save(seatInventory));
     }
 
     @Override @Transactional
@@ -55,7 +56,7 @@ public class SeatInventoryServiceImpl implements SeatInventoryService {
         var flight = flightRepository.findById(flight_id).orElseThrow(
                 () -> new NotFoundException("Flight %d not found.".formatted(flight_id))
         );
-        return seatInventoryRepository.findByFlight_Id(flight.getId()).stream().map(SeatInventoryMapper::toResponse).toList();
+        return seatInventoryRepository.findByFlight_Id(flight.getId()).stream().map(seatInventoryMapper::toResponse).toList();
     }
 
     @Override
@@ -66,7 +67,7 @@ public class SeatInventoryServiceImpl implements SeatInventoryService {
         var seat = seatInventoryRepository.findByFlight_IdAndCabin(flight.getId(), Cabin.valueOf(cabin)).orElseThrow(
                 () -> new NotFoundException("SeatInventory for flight %d with Cabin %s not found.".formatted(flight_id, cabin))
         );
-        return SeatInventoryMapper.toResponse(seat);
+        return seatInventoryMapper.toResponse(seat);
     }
 
     @Override
