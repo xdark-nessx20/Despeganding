@@ -14,5 +14,6 @@ public interface SeatInventoryService {
 
     List<SeatInventoryResponse> listSeatInventoriesByFlight(Long flight_id);
     SeatInventoryResponse getSeatInventoryByFlightAndCabin(Long flight_id, String cabin);
-    boolean existsSeatInventoryByFlightAndCabinWithMinAvailableSeats(Long flight_id, String cabin, Integer min);
+    boolean existsSeatInventoryByFlightAndCabinWithMinAvailableSeats(Long flight_id,
+                                                                     String cabin, Integer min);
 }

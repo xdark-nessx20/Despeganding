@@ -17,7 +17,6 @@ public class SeatInventoryMapper {
     }
 
     public static void patch(SeatInventory entity, SeatInventoryUpdateRequest update) {
-        if (update.cabin() != null) entity.setCabin(Cabin.valueOf(update.cabin()));
         if (update.totalSeats() != null) entity.setTotalSeats(update.totalSeats());
         if (update.availableSeats() != null) entity.setAvailableSeats(update.availableSeats());
     }

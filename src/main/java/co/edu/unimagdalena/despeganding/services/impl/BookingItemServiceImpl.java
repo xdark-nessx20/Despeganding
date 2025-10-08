@@ -23,8 +23,10 @@ public class BookingItemServiceImpl implements BookingItemService {
     private final BookingRepository bookingRepository;
 
     @Override @Transactional
-    public BookingItemResponse addBookingItem(Long booking_id, Long flight_id, BookingItemCreateRequest request) {
-        var flight =  flightRepository.findById(flight_id).orElseThrow(() -> new NotFoundException("Flight %d not found".formatted(flight_id)));
+    public BookingItemResponse addBookingItem(Long booking_id, BookingItemCreateRequest request) {
+        var flight =  flightRepository.findById(request.flight_id()).orElseThrow(
+                () -> new NotFoundException("Flight %d not found".formatted(request.flight_id()))
+        );
         var booking = bookingRepository.findById(booking_id).orElseThrow(
                 () -> new NotFoundException("Booking %d not found".formatted(booking_id))
         );
@@ -44,16 +46,11 @@ public class BookingItemServiceImpl implements BookingItemService {
     }
 
     @Override @Transactional
-    public BookingItemResponse updateBookingItem(Long id, BookingItemUpdateRequest request, Long flight_id) {
+    public BookingItemResponse updateBookingItem(Long id, BookingItemUpdateRequest request) {
         var bookingItem = bookingItemRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Booking Item %d not found".formatted(id))
         );
         BookingMapper.itemPatch(bookingItem, request);
-
-        var flight = flightRepository.findById(flight_id).orElseThrow(
-                () -> new NotFoundException("Flight %d not found".formatted(flight_id))
-        );
-        bookingItem.setFlight(flight);
 
         return BookingMapper.toItemResponse(bookingItem);
     }

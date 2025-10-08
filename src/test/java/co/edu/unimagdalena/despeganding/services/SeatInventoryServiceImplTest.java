@@ -39,7 +39,7 @@ public class SeatInventoryServiceImplTest {
         });
 
         var response = seatInventoryService.createSeatInventory(1L,
-                new SeatInventoryCreateRequest(Cabin.ECONOMY, 40, 35));
+                new SeatInventoryCreateRequest(Cabin.ECONOMY.name(), 40, 35));
 
         assertThat(response).isNotNull();
         assertThat(response.id()).isEqualTo(10L);
@@ -56,7 +56,7 @@ public class SeatInventoryServiceImplTest {
         when(seatInventoryRepository.save(any())).thenAnswer(invocation -> invocation.<SeatInventory>getArgument(0));
 
         var response = seatInventoryService.updateSeatInventory(10L,
-                new SeatInventoryUpdateRequest(null, 40, 5));
+                new SeatInventoryUpdateRequest(40, 5));
 
         assertThat(response).isNotNull();
         assertThat(response.id()).isEqualTo(10L);
