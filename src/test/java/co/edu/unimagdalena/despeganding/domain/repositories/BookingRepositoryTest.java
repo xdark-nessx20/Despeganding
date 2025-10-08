@@ -13,7 +13,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Comparator;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BookingRepositoryTest extends AbstractRepository{
@@ -34,10 +33,9 @@ class BookingRepositoryTest extends AbstractRepository{
 
         var destination_airport = Airport.builder().code("BOG").name("EL DORADO").city("Bogota").build();
 
-        var booking = Booking.builder().createdAt(now.minusDays(3)).updatedAt(now).passenger(passenger).build();
-
-        var booking_2 = Booking.builder().createdAt(now.minusDays(2)).updatedAt(now).passenger(passenger_2).build();
-        var booking_3 = Booking.builder().createdAt(now.minusDays(10)).updatedAt(now.minusDays(1)).passenger(passenger_2).build();
+        var booking = Booking.builder().createdAt(now.minusDays(3)).passenger(passenger).build();
+        var booking_2 = Booking.builder().createdAt(now.minusDays(2)).passenger(passenger_2).build();
+        var booking_3 = Booking.builder().createdAt(now.minusDays(10)).passenger(passenger_2).build();
 
         var flight = Flight.builder()
             .airline(airline).origin(origin_airport).destination(destination_airport)
@@ -77,19 +75,6 @@ class BookingRepositoryTest extends AbstractRepository{
         assertThat(loaded).allSatisfy(booking ->
             assertThat(booking.getCreatedAt())
             .isBetween(now.minusDays(4), now.minusDays(1))
-        );
-    }
-
-    @Test  @DisplayName("Booking: find by updatedAt between two dates")
-    void shouldFindByUpdatedAtBetween() {
-        //When
-        var loaded = bookingRepository.findByUpdatedAtBetween(now.minusDays(2), now.plusHours(1));
-
-        //Then
-        assertThat(loaded).isNotEmpty();
-        assertThat(loaded).allSatisfy(booking ->
-            assertThat(booking.getUpdatedAt())
-            .isBetween(now.minusDays(2), now.minusDays(1))
         );
     }
 
