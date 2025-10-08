@@ -47,7 +47,7 @@ public class FlightServiceImplTest {
         });
 
         var now = OffsetDateTime.now();
-        var response = flightService.createFlight(new FlightCreateRequest("XD0001", now, now.plusHours(2)), 1L, 1L, 2L);
+        var response = flightService.createFlight(1L, new FlightCreateRequest("XD0001", now, now.plusHours(2)));
 
         assertThat(response.id()).isEqualTo(10L);
         assertThat(response.number()).isEqualTo("XD0001");
@@ -67,7 +67,7 @@ public class FlightServiceImplTest {
                 .destination(destination.get()).build()));
         when(flightRepository.save(any())).thenAnswer(invocation -> invocation.<Flight>getArgument(0));
 
-        var response = flightService.updateFlight(new FlightUpdateRequest("XD0002", null, null), 101L, 2L);
+        var response = flightService.updateFlight(101L, new FlightUpdateRequest("XD0002", null, null));
 
         assertThat(response).isNotNull();
         assertThat(response.id()).isEqualTo(101L);

@@ -21,7 +21,7 @@ public class SeatInventoryController {
                                                         SeatInventoryCreateRequest request, UriComponentsBuilder uriBuilder) {
         var body = seatService.createSeatInventory(flightId, request);
         var location = uriBuilder.path("/api/v1/flights/{flightId}/seatInventories/{seatInventoryId}")
-                .buildAndExpand(body.id()).toUri();
+                .buildAndExpand(flightId, body.id()).toUri();
         return ResponseEntity.created(location).body(body);
     }
 
