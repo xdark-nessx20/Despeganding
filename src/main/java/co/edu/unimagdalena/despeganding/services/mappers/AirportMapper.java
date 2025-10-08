@@ -15,6 +15,5 @@ public class AirportMapper {
     public static void patch(Airport entity, AirportUpdateRequest request){
         if (request.code() != null) entity.setCode(request.code());
         if (request.name() != null) entity.setName(request.name());
-        //The airport's city doesn't have to change, I think...
     }
 }

@@ -5,7 +5,6 @@ import co.edu.unimagdalena.despeganding.domain.repositories.AirportRepository;
 import co.edu.unimagdalena.despeganding.exceptions.NotFoundException;
 import co.edu.unimagdalena.despeganding.services.AirportService;
 import co.edu.unimagdalena.despeganding.services.mappers.AirportMapper;
-import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,24 +24,24 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public AirportResponse getAirport(@Nonnull Long id) {
+    public AirportResponse getAirport(Long id) {
         return airportRepository.findById(id).map(AirportMapper::toResponse)
                 .orElseThrow(() -> new NotFoundException("Airport %d not found.".formatted(id)));
     }
 
     @Override
-    public AirportResponse getAirportByCode(@Nonnull String code) {
+    public AirportResponse getAirportByCode(String code) {
         return airportRepository.findByCode(code).map(AirportMapper::toResponse)
                 .orElseThrow(() -> new NotFoundException("Airport with code %s not found.".formatted(code)));
     }
 
     @Override
-    public List<AirportResponse> getCityAirports(@Nonnull String city) {
+    public List<AirportResponse> getCityAirports(String city) {
         return airportRepository.findByCity(city).stream().map(AirportMapper::toResponse).toList();
     }
 
     @Override @Transactional
-    public AirportResponse updateAirport(@Nonnull Long id, AirportUpdateRequest request) {
+    public AirportResponse updateAirport(Long id, AirportUpdateRequest request) {
         var airport = airportRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Airport %d not found.".formatted(id)));
         AirportMapper.patch(airport, request);
@@ -50,7 +49,7 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override @Transactional
-    public void deleteAirport(@Nonnull Long id) {
+    public void deleteAirport(Long id) {
         airportRepository.deleteById(id);
     }
 

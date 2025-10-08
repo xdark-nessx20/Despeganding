@@ -39,7 +39,7 @@ public class SeatInventoryServiceImplTest {
         });
 
         var response = seatInventoryService.createSeatInventory(1L,
-                new SeatInventoryCreateRequest("ECONOMY", 40, 35));
+                new SeatInventoryCreateRequest(Cabin.ECONOMY, 40, 35));
 
         assertThat(response).isNotNull();
         assertThat(response.id()).isEqualTo(10L);

@@ -7,7 +7,6 @@ import co.edu.unimagdalena.despeganding.domain.repositories.SeatInventoryReposit
 import co.edu.unimagdalena.despeganding.exceptions.NotFoundException;
 import co.edu.unimagdalena.despeganding.services.SeatInventoryService;
 import co.edu.unimagdalena.despeganding.services.mappers.SeatInventoryMapper;
-import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +19,7 @@ public class SeatInventoryServiceImpl implements SeatInventoryService {
     private final FlightRepository flightRepository;
 
     @Override @Transactional
-    public SeatInventoryResponse createSeatInventory(@Nonnull Long flight_id, SeatInventoryCreateRequest request) {
+    public SeatInventoryResponse createSeatInventory(Long flight_id, SeatInventoryCreateRequest request) {
         var flight = flightRepository.findById(flight_id).orElseThrow(
                 () -> new NotFoundException("Flight %d not found.".formatted(flight_id))
         );
@@ -30,14 +29,14 @@ public class SeatInventoryServiceImpl implements SeatInventoryService {
     }
 
     @Override
-    public SeatInventoryResponse getSeatInventory(@Nonnull Long id) {
+    public SeatInventoryResponse getSeatInventory(Long id) {
         return seatInventoryRepository.findById(id).map(SeatInventoryMapper::toResponse).orElseThrow(
                 () -> new NotFoundException("SeatInventory %d not found.".formatted(id))
         );
     }
 
     @Override @Transactional
-    public SeatInventoryResponse updateSeatInventory(@Nonnull Long id, SeatInventoryUpdateRequest request) {
+    public SeatInventoryResponse updateSeatInventory(Long id, SeatInventoryUpdateRequest request) {
         var seatInventory = seatInventoryRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("SeatInventory %d not found.".formatted(id))
         );
@@ -46,12 +45,12 @@ public class SeatInventoryServiceImpl implements SeatInventoryService {
     }
 
     @Override @Transactional
-    public void deleteSeatInventory(@Nonnull Long id) {
+    public void deleteSeatInventory(Long id) {
         seatInventoryRepository.deleteById(id);
     }
 
     @Override
-    public List<SeatInventoryResponse> listSeatInventoriesByFlight(@Nonnull Long flight_id) {
+    public List<SeatInventoryResponse> listSeatInventoriesByFlight(Long flight_id) {
         var flight = flightRepository.findById(flight_id).orElseThrow(
                 () -> new NotFoundException("Flight %d not found.".formatted(flight_id))
         );
@@ -59,7 +58,7 @@ public class SeatInventoryServiceImpl implements SeatInventoryService {
     }
 
     @Override
-    public SeatInventoryResponse getSeatInventoryByFlightAndCabin(@Nonnull Long flight_id, @Nonnull String cabin) {
+    public SeatInventoryResponse getSeatInventoryByFlightAndCabin(Long flight_id, String cabin) {
         var flight = flightRepository.findById(flight_id).orElseThrow(
                 () -> new NotFoundException("Flight %d not found.".formatted(flight_id))
         );
@@ -70,7 +69,7 @@ public class SeatInventoryServiceImpl implements SeatInventoryService {
     }
 
     @Override
-    public boolean existsSeatInventoryByFlightAndCabinWithMinAvailableSeats(@Nonnull Long flight_id, @Nonnull String cabin, @Nonnull Integer min) {
+    public boolean existsSeatInventoryByFlightAndCabinWithMinAvailableSeats(Long flight_id, String cabin, Integer min) {
         var flight = flightRepository.findById(flight_id).orElseThrow(
                 () -> new NotFoundException("Flight %d not found.".formatted(flight_id))
         );

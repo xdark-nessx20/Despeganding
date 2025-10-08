@@ -14,17 +14,18 @@ public class FlightMapper {
                 .departureTime(request.departureTime()).build();
     }
 
-    //Check out this method, 'cause how can I get the seatsInventory of a flight when the flight doesn't have a collection of them?
     public static FlightResponse toResponse(Flight flight) {
         Set<TagResponse> tagResponses = flight.getTags() == null ? Set.of() :
                 flight.getTags().stream()
                         .map(tag -> new TagResponse(tag.getId(), tag.getName()))
                         .collect(Collectors.toSet());
+        var airline = flight.getAirline();
+        var origin = flight.getOrigin();
+        var destination = flight.getDestination();
 
         return  new FlightResponse(flight.getId(), flight.getNumber(), flight.getDepartureTime(),
-                flight.getArrivalTime(), flight.getAirline() != null ? flight.getAirline().getId() : null,
-                flight.getOrigin() != null ? flight.getOrigin().getId() : null,
-                flight.getDestination() != null ? flight.getDestination().getId() : null, tagResponses
+                flight.getArrivalTime(), airline.getId(), airline.getName(), origin.getId(),
+                origin.getName(), destination.getId(), destination.getName(), tagResponses
         );
     }
 

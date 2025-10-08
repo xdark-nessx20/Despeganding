@@ -11,8 +11,8 @@ public class SeatInventoryMapper {
     }
     public static SeatInventoryResponse toResponse(SeatInventory seatInventory) {
         return new SeatInventoryResponse(
-                seatInventory.getId(), seatInventory.getCabin().name(),
-                seatInventory.getTotalSeats(), seatInventory.getAvailableSeats(), seatInventory.getFlight().getId()
+                seatInventory.getId(), seatInventory.getCabin().name(), seatInventory.getTotalSeats(),
+                seatInventory.getAvailableSeats(), seatInventory.getFlight().getId(), seatInventory.getFlight().getNumber()
         );
     }
 

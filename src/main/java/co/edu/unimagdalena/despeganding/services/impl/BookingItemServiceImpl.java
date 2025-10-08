@@ -9,7 +9,6 @@ import co.edu.unimagdalena.despeganding.domain.repositories.FlightRepository;
 import co.edu.unimagdalena.despeganding.exceptions.NotFoundException;
 import co.edu.unimagdalena.despeganding.services.BookingItemService;
 import co.edu.unimagdalena.despeganding.services.mappers.BookingMapper;
-import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +23,7 @@ public class BookingItemServiceImpl implements BookingItemService {
     private final BookingRepository bookingRepository;
 
     @Override @Transactional
-    public BookingItemResponse addBookingItem(@Nonnull Long booking_id, @Nonnull Long flight_id, BookingItemCreateRequest request) {
+    public BookingItemResponse addBookingItem(Long booking_id, Long flight_id, BookingItemCreateRequest request) {
         var flight =  flightRepository.findById(flight_id).orElseThrow(() -> new NotFoundException("Flight %d not found".formatted(flight_id)));
         var booking = bookingRepository.findById(booking_id).orElseThrow(
                 () -> new NotFoundException("Booking %d not found".formatted(booking_id))
@@ -38,14 +37,14 @@ public class BookingItemServiceImpl implements BookingItemService {
     }
 
     @Override
-    public BookingItemResponse getBookingItem(@Nonnull Long id) {
+    public BookingItemResponse getBookingItem(Long id) {
         return bookingItemRepository.findById(id).map(BookingMapper::toItemResponse).orElseThrow(
                 () -> new NotFoundException("Booking Item %d not found".formatted(id))
         );
     }
 
     @Override @Transactional
-    public BookingItemResponse updateBookingItem(@Nonnull Long id, BookingItemUpdateRequest request, @Nonnull Long flight_id) {
+    public BookingItemResponse updateBookingItem(Long id, BookingItemUpdateRequest request, Long flight_id) {
         var bookingItem = bookingItemRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Booking Item %d not found".formatted(id))
         );
@@ -60,12 +59,12 @@ public class BookingItemServiceImpl implements BookingItemService {
     }
 
     @Override @Transactional
-    public void deleteBookingItem(@Nonnull Long id) {
+    public void deleteBookingItem(Long id) {
         bookingItemRepository.deleteById(id);
     }
 
     @Override
-    public List<BookingItemResponse> listBookingItemsByBooking(@Nonnull Long booking_id) {
+    public List<BookingItemResponse> listBookingItemsByBooking(Long booking_id) {
         var booking = bookingRepository.findById(booking_id).orElseThrow(
                 () -> new NotFoundException("Booking %d not found".formatted(booking_id))
         );
@@ -73,7 +72,7 @@ public class BookingItemServiceImpl implements BookingItemService {
     }
 
     @Override
-    public Long countReservedSeatsByFlightAndCabin(@Nonnull Long flight_id, String cabin) {
+    public Long countReservedSeatsByFlightAndCabin(Long flight_id, String cabin) {
         var flight = flightRepository.findById(flight_id).orElseThrow(
                 () -> new NotFoundException("Flight %d not found".formatted(flight_id))
         );
@@ -81,7 +80,7 @@ public class BookingItemServiceImpl implements BookingItemService {
     }
 
     @Override
-    public BigDecimal calculateTotalPriceByBooking(@Nonnull Long booking_id) {
+    public BigDecimal calculateTotalPriceByBooking(Long booking_id) {
         var booking = bookingRepository.findById(booking_id).orElseThrow(
                 () -> new NotFoundException("Booking %d not found".formatted(booking_id))
         );

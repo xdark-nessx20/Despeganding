@@ -5,7 +5,8 @@ import co.edu.unimagdalena.despeganding.domain.repositories.AirlineRepository;
 import co.edu.unimagdalena.despeganding.exceptions.NotFoundException;
 import co.edu.unimagdalena.despeganding.services.AirlineService;
 import co.edu.unimagdalena.despeganding.services.mappers.AirlineMapper;
-import jakarta.annotation.Nonnull;
+
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,19 +26,19 @@ public class AirlineServiceImpl implements AirlineService {
     }
 
     @Override @Transactional(readOnly = true)
-    public AirlineResponse getAirline(@Nonnull Long id) {
+    public AirlineResponse getAirline(Long id) {
         return airlineRepository.findById(id).map(AirlineMapper::toResponse)
                 .orElseThrow(() -> new NotFoundException("Airline %d not found.".formatted(id)));
     }
 
     @Override @Transactional(readOnly = true)
-    public AirlineResponse getAirlineByCode(@Nonnull String code) {
+    public AirlineResponse getAirlineByCode(String code) {
         return airlineRepository.findByCode(code).map(AirlineMapper::toResponse)
                 .orElseThrow(() -> new NotFoundException("Airline with code %s not found.".formatted(code)));
     }
 
     @Override
-    public AirlineResponse updateAirline(@Nonnull Long id, AirlineUpdateRequest request) {
+    public AirlineResponse updateAirline(Long id, AirlineUpdateRequest request) {
         var airline = airlineRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Airline %d not found.".formatted(id)));
         AirlineMapper.patch(airline, request);
@@ -45,7 +46,7 @@ public class AirlineServiceImpl implements AirlineService {
     }
 
     @Override
-    public void deleteAirline(@Nonnull Long id) {
+    public void deleteAirline(Long id) {
         airlineRepository.deleteById(id);
     }
 
