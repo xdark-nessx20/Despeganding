@@ -12,7 +12,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 //Validated sets up the vars validating in the controller
-@RestController @RequiredArgsConstructor @Validated
+@RestController
+@RequiredArgsConstructor
+@Validated
 @RequestMapping("/api/v1/bookings/{bookingId}/items")
 public class BookingItemController {
     private final BookingItemService bookingItemService;

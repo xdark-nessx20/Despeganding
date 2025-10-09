@@ -5,8 +5,7 @@ import co.edu.unimagdalena.despeganding.services.FlightService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -37,8 +36,7 @@ public class FlightController {
     }
 
     @PatchMapping("/{flightId}")
-    public ResponseEntity<FlightResponse> patch(@PathVariable Long flightId,
-                                                @RequestBody FlightUpdateRequest request) {
+    public ResponseEntity<FlightResponse> patch(@PathVariable Long flightId, @Valid @RequestBody FlightUpdateRequest request) {
         return ResponseEntity.ok(flightService.updateFlight(flightId, request));
     }
 
@@ -58,23 +56,19 @@ public class FlightController {
         return ResponseEntity.ok(flightService.removeTagFromFlight(flightId, tagId));
     }
 
-    @GetMapping
-    public ResponseEntity<Page<FlightResponse>> getByAirline(@RequestParam String airlineName, @RequestParam(defaultValue = "0") int page,
-                                                             @RequestParam(defaultValue = "10") int size) {
-        var flight_page = flightService.listFlightsByAirline(airlineName, PageRequest.of(
-                page, size, Sort.by("departureTime").ascending()
-        ));
+    //params is for avoid duplicate endpoints
+    @GetMapping(params = "airlineName")
+    public ResponseEntity<Page<FlightResponse>> getByAirline(@RequestParam String airlineName, Pageable pageable) {
+        var flight_page = flightService.listFlightsByAirline(airlineName, pageable);
         return ResponseEntity.ok(flight_page);
     }
 
-    @GetMapping
+    @GetMapping(params = {"departureTime", "arrivalTime"})
     public ResponseEntity<Page<FlightResponse>> listByAirportsAndTime(@RequestParam(required = false) String originAirportCode, @RequestParam(required = false) String destinationAirportCode,
                                                                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime departureTime,
                                                                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime arrivalTime,
-                                                                      @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
-        var flight_page = flightService.listScheduledFlights(originAirportCode, destinationAirportCode, departureTime,
-                arrivalTime, PageRequest.of(page, size, Sort.by("departureTime").ascending())
-        );
+                                                                      Pageable pageable) {
+        var flight_page = flightService.listScheduledFlights(originAirportCode, destinationAirportCode, departureTime, arrivalTime, pageable);
         return ResponseEntity.ok(flight_page);
     }
 }

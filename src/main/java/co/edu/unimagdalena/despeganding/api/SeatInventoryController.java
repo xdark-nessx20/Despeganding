@@ -11,7 +11,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
-@RestController @RequiredArgsConstructor @Validated
+@RestController
+@RequiredArgsConstructor
+@Validated
 @RequestMapping("/api/v1/flights/{flightId}/seatInventories")
 public class SeatInventoryController {
     private final SeatInventoryService seatService;
@@ -35,7 +37,7 @@ public class SeatInventoryController {
         return ResponseEntity.ok(seatService.listSeatInventoriesByFlight(flightId));
     }
 
-    @GetMapping
+    @GetMapping(params = "cabin")
     public ResponseEntity<SeatInventoryResponse> getByFlightAndCabin(@PathVariable Long flightId,
                                                                      @RequestParam String cabin) {
         return ResponseEntity.ok(seatService.getSeatInventoryByFlightAndCabin(flightId, cabin));
@@ -49,7 +51,7 @@ public class SeatInventoryController {
 
 
     @DeleteMapping("/{seatInventoryId}")
-    public ResponseEntity<Void> delete(@PathVariable Long  flightId, @PathVariable Long seatInventoryId) {
+    public ResponseEntity<Void> delete(@PathVariable Long flightId, @PathVariable Long seatInventoryId) {
         seatService.deleteSeatInventory(seatInventoryId);
         return ResponseEntity.noContent().build();
     }

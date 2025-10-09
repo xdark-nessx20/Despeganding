@@ -25,21 +25,25 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BookingItemServiceImplTest {
-    @Mock BookingItemRepository bookingItemRepository;
-    @Mock FlightRepository flightRepository;
-    @Mock BookingRepository bookingRepository;
+    @Mock
+    BookingItemRepository bookingItemRepository;
+    @Mock
+    FlightRepository flightRepository;
+    @Mock
+    BookingRepository bookingRepository;
 
-    @InjectMocks BookingItemServiceImpl bookingItemServiceImpl;
+    @InjectMocks
+    BookingItemServiceImpl bookingItemServiceImpl;
 
     @Test
-    void shouldAddBookingItemAndMapToResponse(){
+    void shouldAddBookingItemAndMapToResponse() {
         var now = OffsetDateTime.now();
         when(flightRepository.findById(1L)).thenReturn(Optional.of(Flight.builder().id(1L).number("XD0001").departureTime(now)
                 .arrivalTime(now.plusHours(5)).build()));
         when(bookingRepository.findById(101L)).thenReturn(Optional.of(Booking.builder().id(101L).createdAt(now).build()));
 
-        var response = bookingItemServiceImpl.addBookingItem(101L, 1L,
-                new BookingItemCreateRequest("ECONOMY", new BigDecimal(1000000), 1));
+        var response = bookingItemServiceImpl.addBookingItem(101L,
+                new BookingItemCreateRequest("ECONOMY", new BigDecimal(1000000), 1, 1L));
 
         assertThat(response).isNotNull();
         assertThat(response.flight_id()).isEqualTo(1L);
@@ -47,16 +51,14 @@ public class BookingItemServiceImplTest {
     }
 
     @Test
-    void shouldListBookingItemsByBooking(){
+    void shouldListBookingItemsByBooking() {
+        var f1 = Flight.builder().id(10L).number("XD1").build();
         var booking = Optional.of(Booking.builder().id(101L).createdAt(OffsetDateTime.now()).build());
-        var booking_2 = Optional.of(Booking.builder().id(102L).createdAt(OffsetDateTime.now()).build());
-        when(bookingRepository.findById(101L)).thenReturn(booking);
-        when(bookingItemRepository.findByBooking_IdOrderBySegmentOrder(101L)).thenReturn(List.of(
-                BookingItem.builder().id(1011L).cabin(Cabin.ECONOMY).booking(booking.get()).price(new BigDecimal(1000000)).segmentOrder(1).build(),
-                BookingItem.builder().id(1012L).cabin(Cabin.PREMIUM).booking(booking_2.get()).price(new BigDecimal(7000000)).segmentOrder(1).build(),
-                BookingItem.builder().id(1013L).cabin(Cabin.PREMIUM).booking(booking.get()).price(new BigDecimal(4000000)).segmentOrder(2).build(),
-                BookingItem.builder().id(1014L).cabin(Cabin.PREMIUM).booking(booking_2.get()).price(new BigDecimal(4000000)).segmentOrder(2).build(),
-                BookingItem.builder().id(1015L).cabin(Cabin.BUSINESS).booking(booking.get()).price(new BigDecimal(2000000)).segmentOrder(3).build()
+        when(bookingRepository.findById(anyLong())).thenReturn(booking);
+        when(bookingItemRepository.findByBooking_IdOrderBySegmentOrder(anyLong())).thenReturn(List.of(
+                BookingItem.builder().id(1011L).cabin(Cabin.ECONOMY).booking(booking.get()).price(new BigDecimal(1000000)).segmentOrder(1).flight(f1).build(),
+                BookingItem.builder().id(1013L).cabin(Cabin.PREMIUM).booking(booking.get()).price(new BigDecimal(4000000)).segmentOrder(2).flight(f1).build(),
+                BookingItem.builder().id(1015L).cabin(Cabin.BUSINESS).booking(booking.get()).price(new BigDecimal(2000000)).segmentOrder(3).flight(f1).build()
         ));
 
         var response = bookingItemServiceImpl.listBookingItemsByBooking(101L);
