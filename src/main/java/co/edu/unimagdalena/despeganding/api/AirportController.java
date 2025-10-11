@@ -33,12 +33,12 @@ public class AirportController {
     public ResponseEntity<AirportResponse> getAirport(@PathVariable Long id) {
         return ResponseEntity.ok(airportService.getAirport(id));
     }
-    @GetMapping("/by-code")
+    @GetMapping(params = "code")
     public ResponseEntity<AirportResponse> getAirportByCode(@RequestParam String code) {
         return ResponseEntity.ok(airportService.getAirportByCode(code));
     }
 
-    @GetMapping("/by-city")
+    @GetMapping(params = "city")
     public ResponseEntity<List<AirportResponse>> getCityAirports(@RequestParam String city) {
         return ResponseEntity.ok(airportService.getCityAirports(city));
     }
@@ -55,9 +55,8 @@ public class AirportController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<AirportResponse>> listAllAirports(@RequestParam(defaultValue = "0") int page,
-                                                                                   @RequestParam(defaultValue = "10") int size) {
-        var result = airportService.listAllAirports(PageRequest.of(page, size, Sort.by("id").ascending()));
+    public ResponseEntity<Page<AirportResponse>> listAllAirports(Pageable pageable) {
+        var result = airportService.listAllAirports(pageable);
         return ResponseEntity.ok(result);
     }
 }

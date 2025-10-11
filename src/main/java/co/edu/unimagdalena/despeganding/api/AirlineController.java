@@ -32,7 +32,7 @@ public class AirlineController {
     public ResponseEntity<AirlineResponse> getAirline(@PathVariable Long id) {
         return ResponseEntity.ok(airlineService.getAirline(id));
     }
-    @GetMapping("/by-code")
+    @GetMapping(params = "code")
     public ResponseEntity<AirlineResponse> getAirlineByCode(@RequestParam String code) {
         return ResponseEntity.ok(airlineService.getAirlineByCode(code));
     }
@@ -53,9 +53,8 @@ public class AirlineController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<AirlineResponse>> listAllAirlinesPage(@RequestParam(defaultValue = "0") int page,
-                                                                                   @RequestParam(defaultValue = "10") int size) {
-        var result = airlineService.listAllAirlinesPage(PageRequest.of(page, size, Sort.by("id").ascending()));
+    public ResponseEntity<Page<AirlineResponse>> listAllAirlinesPage(Pageable pageable) {
+        var result = airlineService.listAllAirlinesPage(pageable);
         return ResponseEntity.ok(result);
     }
 

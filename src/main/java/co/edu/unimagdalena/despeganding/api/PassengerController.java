@@ -29,7 +29,7 @@ public class PassengerController {
     public ResponseEntity<PassengerResponse> getPassenger(@PathVariable Long id) {
         return ResponseEntity.ok(passengerService.getPassenger(id));
     }
-    @GetMapping("/by-email")
+    @GetMapping(params = "email")
     public ResponseEntity<PassengerResponse> getPassengerByEmail(@RequestParam String email) {
         return ResponseEntity.ok(passengerService.getPassengerByEmail(email));
     }
@@ -48,9 +48,8 @@ public class PassengerController {
         return ResponseEntity.noContent().build();
     }
     @GetMapping
-    public ResponseEntity<Page<PassengerResponse>> listAllPassengers(@RequestParam(defaultValue = "0") int page,
-                                                        @RequestParam(defaultValue = "10") int size) {
-        var result = passengerService.listAllPassengers(PageRequest.of(page, size, Sort.by("id").ascending()));
+    public ResponseEntity<Page<PassengerResponse>> listAllPassengers(Pageable pageable) {
+        var result = passengerService.listAllPassengers(pageable);
         return ResponseEntity.ok(result);
     }
 }

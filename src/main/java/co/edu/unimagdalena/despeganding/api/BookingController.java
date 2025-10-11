@@ -36,13 +36,13 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getBooking(id));
     }
 
-    @GetMapping("/between-dates")
+    @GetMapping(params = {"start", "end"})
     public ResponseEntity<List<BookingResponse>> listBookingsBetweenDates(@RequestParam OffsetDateTime start,
                                                                           @RequestParam OffsetDateTime end) {
         return ResponseEntity.ok(bookingService.listBookingsBetweenDates(start, end));
     }
 
-    @GetMapping("/by-email")
+    @GetMapping(params = "email")
     public ResponseEntity<Page<BookingResponse>> listBookingsByPassengerEmail(@RequestParam String email,
                                                                               Pageable pageable) {
         return ResponseEntity.ok(bookingService.listBookingsByPassengerEmailAndOrderedMostRecently(email, pageable));
