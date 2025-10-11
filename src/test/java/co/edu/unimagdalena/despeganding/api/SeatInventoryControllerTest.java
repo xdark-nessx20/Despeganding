@@ -32,7 +32,7 @@ public class SeatInventoryControllerTest {
         var request = new SeatInventoryCreateRequest("ECONOMY", 50, 25);
         var response = new SeatInventoryResponse(100001L, "ECONOMY", 50, 25, 1001L, "XD1");
 
-        when(seatService.createSeatInventory(eq(1001L), request)).thenReturn(response);
+        when(seatService.createSeatInventory(eq(1001L), any())).thenReturn(response);
 
         mvc.perform(post("/api/v1/flights/1001/seatInventories")
                         .contentType(MediaType.APPLICATION_JSON)

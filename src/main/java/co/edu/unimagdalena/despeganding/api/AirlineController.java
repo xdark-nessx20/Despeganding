@@ -52,11 +52,11 @@ public class AirlineController {
         return ResponseEntity.ok(airlineService.listAllAirlines());
     }
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity<Page<AirlineResponse>> listAllAirlinesPage(Pageable pageable) {
         var result = airlineService.listAllAirlinesPage(pageable);
         return ResponseEntity.ok(result);
-    }
+    }*/
 
 
 

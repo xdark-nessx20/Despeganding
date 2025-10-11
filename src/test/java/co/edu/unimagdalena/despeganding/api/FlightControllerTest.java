@@ -16,7 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Set;
-import static org.mockito.ArgumentMatchers.*;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -43,7 +44,7 @@ public class FlightControllerTest {
                 101L, "XDAirport", 102L, "DXAirport",
                 Set.of());
 
-        when(flightService.createFlight(request)).thenReturn(response);
+        when(flightService.createFlight(any())).thenReturn(response);
 
         mockMvc.perform(post("/api/v1/flights").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
