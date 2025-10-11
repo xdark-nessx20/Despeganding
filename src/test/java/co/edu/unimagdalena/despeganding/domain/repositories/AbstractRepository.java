@@ -13,9 +13,9 @@ import org.testcontainers.junit.jupiter.Testcontainers;
  * - @Testcontainers + @ServiceConnection: autoconfigura el DataSource con Postgres 16 en contenedor
  */
 
+@DataJpaTest
 @Testcontainers
 @ActiveProfiles("test")
-@DataJpaTest
 public abstract class AbstractRepository {
     @Container
     @ServiceConnection
