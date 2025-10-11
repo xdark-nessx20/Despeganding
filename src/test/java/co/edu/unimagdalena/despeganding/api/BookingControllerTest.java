@@ -96,12 +96,12 @@ public class BookingControllerTest {
 
         var resp = new BookingResponse(1L, OffsetDateTime.now(), "John Doe", "john@example.com",
                 Collections.emptyList());
-        List<BookingResponse> bookings = Arrays.asList(resp);
+        List<BookingResponse> bookings = List.of(resp);
 
         when(service.listBookingsBetweenDates(any(OffsetDateTime.class), any(OffsetDateTime.class)))
                 .thenReturn(bookings);
 
-        mvc.perform(get("/api/v1/bookings/between-dates")
+        mvc.perform(get("/api/v1/bookings")
                         .param("start", start.toString())
                         .param("end", end.toString()))
                 .andExpect(status().isOk())
@@ -118,10 +118,8 @@ public class BookingControllerTest {
         when(service.listBookingsByPassengerEmailAndOrderedMostRecently(anyString(), any(Pageable.class)))
                 .thenReturn(page);
 
-        mvc.perform(get("/api/v1/bookings/by-email")
-                        .param("email", "john@example.com")
-                        .param("page", "0")
-                        .param("size", "10"))
+        mvc.perform(get("/api/v1/bookings")
+                        .param("email", "john@example.com"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray());
     }

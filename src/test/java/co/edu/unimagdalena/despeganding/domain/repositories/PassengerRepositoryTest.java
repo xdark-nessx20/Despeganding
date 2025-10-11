@@ -14,21 +14,25 @@ public class PassengerRepositoryTest extends AbstractRepository {
     @Autowired
     PassengerRepository passengerRepository;
 
+    @Autowired
+    PassengerProfileRepository passengerProfileRepository;
+
     @Test
     @DisplayName("Passenger: find by email (ignore case) and fetch the profile")
     void shouldFindByEmailIgnoreCaseAndFetchProfileByEmail() {
         // Given
         var profile = PassengerProfile.builder().phone("300 000 0001").countryCode("+57").build();
         var passenger = Passenger.builder().fullName("Zacarias Flores Del Campo").email("zfdc24@DEMO.COM").profile(profile).build();
+        passengerProfileRepository.save(profile);
         passengerRepository.save(passenger);
 
         // When
-        Optional<Passenger> byEmail = passengerRepository.findByEmailIgnoreCase("zfdc24@DEMO.COM");
+        Optional<Passenger> byEmail = passengerRepository.findByEmailIgnoreCase("ZFDC24@DEMO.COM");
         Optional<Passenger> withProfile = passengerRepository.findByEmailIgnoreCaseWithProfile("zfdc24@DEMO.COM");
 
         // Then
         assertThat(byEmail).isPresent();
-        assertThat(byEmail.get().getEmail()).isEqualTo("ZFDC24@DEMO.COM");
+        assertThat(byEmail.get().getEmail()).isEqualTo("zfdc24@DEMO.COM");
         assertThat(withProfile).isPresent();
         assertThat(withProfile.get().getProfile().getCountryCode()).isEqualTo("+57");
     }

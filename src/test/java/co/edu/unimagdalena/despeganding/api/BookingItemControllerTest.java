@@ -47,9 +47,9 @@ public class BookingItemControllerTest {
     @Test
     void listByBooking_shouldReturn200() throws Exception {
         var response = List.of(new BookingItemResponse(777L, "ECONOMY", new BigDecimal(100000), 1, 11111L, 1001L, "XD1"));
-        when(bookingItemService.listBookingItemsByBooking(1L)).thenReturn(response);
+        when(bookingItemService.listBookingItemsByBooking(11111L)).thenReturn(response);
 
-        mvc.perform(get("//api/v1/bookings/11111/items"))
+        mvc.perform(get("/api/v1/bookings/11111/items"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].booking_id").value(11111));
     }

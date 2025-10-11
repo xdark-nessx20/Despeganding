@@ -31,10 +31,10 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     @Query(value = """
         SELECT f.* FROM flights f
-            JOIN tags_flights tf ON tf.flight_id = f.id
-            JOIN tags t ON tf.tag_id = t.id
+            JOIN tags_flights tf ON tf.flight_id = f.flight_id
+            JOIN tags t ON tf.tag_id = t.tag_id
         WHERE t.name IN (:tags)
-        GROUP BY f.id HAVING COUNT(DISTINCT t.name) = :required
+        GROUP BY f.flight_id HAVING COUNT(DISTINCT t.name) = :required
     """, nativeQuery = true)
     List<Flight> findFlightsWithTheseTags(@Param("tags") Collection<String> tags,
         @Param("required") Long required);

@@ -85,7 +85,7 @@ public class AirportControllerTest {
     void getAirportByCode_shouldReturn200() throws Exception {
         when(service.getAirportByCode("JFK")).thenReturn(new AirportResponse(1L, "JFK", "John F Kennedy", "New York"));
 
-        mvc.perform(get("/api/v1/airports/by-code")
+        mvc.perform(get("/api/v1/airports")
                         .param("code", "JFK"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("JFK"));
@@ -99,7 +99,7 @@ public class AirportControllerTest {
         );
         when(service.getCityAirports("New York")).thenReturn(airports);
 
-        mvc.perform(get("/api/v1/airports/by-city")
+        mvc.perform(get("/api/v1/airports")
                         .param("city", "New York"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))

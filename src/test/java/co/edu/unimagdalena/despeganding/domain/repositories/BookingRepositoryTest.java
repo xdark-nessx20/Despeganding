@@ -37,7 +37,7 @@ class BookingRepositoryTest extends AbstractRepository{
         var booking_2 = Booking.builder().createdAt(now.minusDays(2)).passenger(passenger_2).build();
         var booking_3 = Booking.builder().createdAt(now.minusDays(10)).passenger(passenger_2).build();
 
-        var flight = Flight.builder()
+        var flight = Flight.builder().number("XD1")
             .airline(airline).origin(origin_airport).destination(destination_airport)
             .departureTime(now.plusHours(1)).arrivalTime(now.plusHours(3)).build();
 

@@ -1,10 +1,7 @@
 package co.edu.unimagdalena.despeganding.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.HashSet;
@@ -16,6 +13,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "flights")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Flight {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "flight_id")
@@ -42,7 +40,7 @@ public class Flight {
     @JoinColumn(name = "destination_airport_id", nullable = false)
     private Airport destination;
 
-    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "tags_flights",
             joinColumns = @JoinColumn(name = "flight_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))

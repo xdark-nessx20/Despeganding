@@ -33,7 +33,7 @@ public class TagController {
         return ResponseEntity.ok(tagService.listAllTags());
     }
 
-    @GetMapping //RequestParam is made mostly for filtering info
+    @GetMapping(params = "names") //RequestParam is made mostly for filtering info
     public ResponseEntity<List<TagResponse>> listByNames(@RequestParam List<String> names) {
         return ResponseEntity.ok(tagService.listTagsByNameIn(names));
     }

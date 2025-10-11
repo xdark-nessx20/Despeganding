@@ -86,7 +86,7 @@ public class PassengerControllerTest {
         when(service.getPassengerByEmail("john@example.com"))
                 .thenReturn(new PassengerResponse(1L, "John Doe", "john@example.com", profile));
 
-        mvc.perform(get("/api/v1/passengers/by-email")
+        mvc.perform(get("/api/v1/passengers")
                         .param("email", "john@example.com"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value("john@example.com"));

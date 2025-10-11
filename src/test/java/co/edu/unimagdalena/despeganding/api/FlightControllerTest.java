@@ -54,11 +54,11 @@ public class FlightControllerTest {
 
     @Test
     void get_ShouldReturn404() throws Exception {
-        when(flightService.getFlight(99L)).thenThrow(new NotFoundException("Room 99 not found"));
+        when(flightService.getFlight(99L)).thenThrow(new NotFoundException("Flight 99 not found"));
 
         mockMvc.perform(get("/api/v1/flights/99"))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value("Room 99 not found"));
+                .andExpect(jsonPath("$.message").value("Flight 99 not found"));
     }
 
     @Test
@@ -78,7 +78,9 @@ public class FlightControllerTest {
 
         when(flightService.listFlightsByAirline("ZZZZZ", PageRequest.of(0, 5))).thenReturn(page);
 
-        mockMvc.perform(get("/api/v1/flight?airlineName=ZZZZZ&page=0&size=5"))
+        mockMvc.perform(get("/api/v1/flights")
+                        .param("airlineName", "ZZZZZ")
+                        .param("page", "0").param("size", "5"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalElements").value(1));
     }
